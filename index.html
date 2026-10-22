@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StayLuxe | Find Your Perfect Stay</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <a href="#" class="logo">Stay<span>Luxe</span></a>
+
+  <nav id="navigation">
+    <a href="#destinations">Destinations</a>
+    <a href="#hotels">Hotels</a>
+    <a href="#about">About</a>
+  </nav>
+
+  <button id="menuButton" class="menu-button">☰</button>
+  <a href="#searchSection" class="nav-button">Find a stay ↗</a>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <p class="eyebrow">DISCOVER INDIA, ONE STAY AT A TIME</p>
+    <h1>Your next stay<br><em>starts here.</em></h1>
+    <p>Discover beautiful hotels, peaceful escapes and unforgettable destinations throughout India.</p>
+    <a href="#searchSection" class="hero-link">Explore stays ↓</a>
+  </div>
+</section>
+
+<section class="search-container" id="searchSection">
+  <form id="searchForm" class="search-box">
+
+    <div class="search-field">
+      <label for="destination">DESTINATION</label>
+      <input id="destination" list="cityList"
+             placeholder="Search any Indian city" required>
+      <datalist id="cityList"></datalist>
+    </div>
+
+    <div class="search-field">
+      <label for="checkin">CHECK IN</label>
+      <input type="date" id="checkin" required>
+    </div>
+
+    <div class="search-field">
+      <label for="checkout">CHECK OUT</label>
+      <input type="date" id="checkout" required>
+    </div>
+
+    <div class="search-field">
+      <label for="guests">GUESTS</label>
+      <select id="guests">
+        <option value="1">1 guest</option>
+        <option value="2" selected>2 guests</option>
+        <option value="3">3 guests</option>
+        <option value="4">4 guests</option>
+        <option value="5">5+ guests</option>
+      </select>
+    </div>
+
+    <button type="submit" class="search-button">Search hotels →</button>
+  </form>
+  <p class="search-hint">Explore destinations throughout India.</p>
+</section>
+
+<section class="section" id="destinations">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">EXPLORE INDIA</p>
+      <h2>Where will you go?</h2>
+      <p>Discover your next favourite destination.</p>
+    </div>
+  </div>
+
+  <div class="destination-grid" id="destinationGrid"></div>
+
+  <div class="city-directory">
+    <h3>Explore cities across India</h3>
+    <p>Select any city to see its sample hotel listings.</p>
+    <div id="cityButtons" class="city-buttons"></div>
+  </div>
+</section>
+
+<section class="section hotels-section" id="hotels">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">HANDPICKED FOR YOU</p>
+      <h2 id="hotelHeading">Featured Hotels</h2>
+      <p id="hotelSubtitle">Discover places worth staying at.</p>
+    </div>
+
+    <button type="button" id="viewAllButton" class="view-all">
+      View all hotels →
+    </button>
+  </div>
+
+  <p id="resultsMessage" class="results-message" role="status"></p>
+  <div class="hotel-grid" id="hotelGrid"></div>
+
+  <p class="disclaimer">
+    Demo website: hotels, prices, ratings and availability are sample data.
+    Real bookings and payments are not enabled.
+  </p>
+</section>
+
+<section class="bottom-banner" id="about">
+  <p>YOUR JOURNEY, YOUR WAY</p>
+  <h2>Go somewhere new.<br><em>Stay somewhere lovely.</em></h2>
+  <a href="#searchSection">Find your stay →</a>
+</section>
+
+<footer>
+  <a href="#" class="logo">Stay<span>Luxe</span></a>
+  <p>Discover India, one stay at a time.</p>
+  <p>© <span id="year"></span> StayLuxe</p>
+</footer>
+
+<!-- Hotel details, booking, payment and confirmation screens -->
+<section id="bookingFlow" class="booking-flow" hidden></section>
+
+
+<script src="script.js"></script>
+</body>
+</html>
