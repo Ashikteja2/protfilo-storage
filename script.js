@@ -901,9 +901,15 @@ function openBookingForm() {
 }
 
 
+
 /* 14. DEMO PAYMENT PAGE */
 
 function openPaymentPage() {
+  if (!currentBooking || !currentBooking.hotel) {
+    alert("Please complete the booking details first.");
+    return;
+  }
+
   showBookingPage(`
     <button class="flow-back" id="backToBooking">
       ← Back to guest details
@@ -914,14 +920,13 @@ function openPaymentPage() {
         <h2>Payment</h2>
 
         <p class="flow-notice">
-          Demo mode only. No money will be collected and no
-          real reservation will be created.
+          Demo mode only. No real payment will be collected.
         </p>
 
         <form id="paymentForm" class="flow-form">
           <label>
             Payment method
-            <select name="method">
+            <select name="method" required>
               <option value="Demo UPI">Demo UPI</option>
               <option value="Demo card">Demo card</option>
               <option value="Pay at property (demo)">
@@ -931,7 +936,7 @@ function openPaymentPage() {
           </label>
 
           <button class="flow-primary" type="submit">
-            Simulate successful payment
+            Save demo booking →
           </button>
         </form>
       </div>
@@ -952,17 +957,74 @@ function openPaymentPage() {
   `);
 
   getElement("backToBooking").addEventListener(
-    "click", openBookingForm
+    "click",
+    openBookingForm
   );
 
-  getElement("paymentForm").addEventListener("submit", event => {
-    event.preventDefault();
+  getElement("paymentForm").addEventListener(
+    "submit",
+    async function (event) {
+      event.preventDefault();
 
-    const method = event.currentTarget.elements.method.value;
-    showBookingSuccess(method);
-  });
+      if (!currentBooking || !currentBooking.hotel) {
+        alert("Please complete the booking details first.");
+        return;
+      }
+
+      const method = event.currentTarget.elements.method.value;
+
+      // Match the property names expected by the Java backend.
+      const bookingData = {
+        hotelName: currentBooking.hotel.name,
+        city: currentBooking.hotel.city,
+        guestName: currentBooking.fullName,
+        guestEmail: currentBooking.email,
+        checkIn: currentBooking.checkin,
+        checkOut: currentBooking.checkout,
+        guests: Number(currentBooking.guests),
+        totalAmount: Number(currentBooking.total),
+        paymentMethod: method,
+        bookingStatus: "CONFIRMED"
+      };
+
+      try {
+        const response = await fetch(
+          "http://localhost:8080/api/bookings",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(bookingData)
+          }
+        );
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(
+            errorText || `HTTP error ${response.status}`
+          );
+        }
+
+        const savedBooking = await response.json();
+
+        // Keep the reference returned by the backend when available.
+        if (savedBooking.bookingReference) {
+          currentBooking.reference = savedBooking.bookingReference;
+        }
+
+        showBookingSuccess(method);
+
+      } catch (error) {
+        console.error("Booking save failed:", error);
+
+        alert(
+          "Booking could not be saved. Check the VS Code backend terminal."
+        );
+      }
+    }
+  );
 }
-
 
 /* 15. BOOKING SUCCESS PAGE */
 

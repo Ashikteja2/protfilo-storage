@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"name": "hotel-booking-website - Copy",
+			"path": "."
+		},
+		{
+			"name": "stayluxe-backend",
+			"path": "../stayluxe-backend"
+		},
+		{
+			"name": "stayluxe-tests",
+			"path": "../stayluxe-tests"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "hotel-booking-website - Copy",
+		"java.configuration.updateBuildConfiguration": "interactive"
+	}
+}
